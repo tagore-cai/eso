@@ -9,7 +9,7 @@ import 'package:eso/utils.dart';
 import 'package:eso/utils/cache_util.dart';
 import 'package:eso/utils/flutter_slider.dart';
 import 'package:eso/utils/text_input_formatter.dart';
-import 'package:file_chooser/file_chooser.dart';
+import 'package:file_selector_platform_interface/file_selector_platform_interface.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -483,24 +483,24 @@ class UINovelMenu extends StatelessWidget {
                         child: Text('图片'),
                         onPressed: () async {
                           if (Global.isDesktop) {
-                            final f = await showOpenPanel(
+                            final f = await FileSelectorPlatform.instance.openFile(
                               confirmButtonText: '选择图片',
-                              allowedFileTypes: <FileTypeFilterGroup>[
-                                FileTypeFilterGroup(
+                              acceptedTypeGroups: <XTypeGroup>[
+                                XTypeGroup(
                                   label: '图片',
-                                  fileExtensions: <String>['jpg', 'jpeg', 'png', 'gif'],
+                                  extensions: <String>['jpg', 'jpeg', 'png', 'gif'],
                                 ),
-                                FileTypeFilterGroup(
+                                XTypeGroup(
                                   label: '其他',
-                                  fileExtensions: <String>[],
+                                  extensions: <String>[],
                                 ),
                               ],
                             );
-                            if (f.canceled) {
+                            if (f == null || f.path == null) {
                               Utils.toast('未选取图片');
                               return;
                             }
-                            final image = f.paths.first;
+                            final image = f.path;
                             final file = File(image);
                             final name = Utils.getFileNameAndExt(image);
                             final _cacheUtil =

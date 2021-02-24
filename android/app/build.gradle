@@ -36,7 +36,7 @@ android {
             v2SigningEnabled true
         }
     }
-    
+
     ndkVersion '21.3.6528147'
 
     compileSdkVersion 28
@@ -51,6 +51,7 @@ android {
 
     defaultConfig {
         applicationId "com.mabdc.eso"
+        multiDexEnabled true
         minSdkVersion 18
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
@@ -78,4 +79,3 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-

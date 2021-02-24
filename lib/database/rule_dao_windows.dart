@@ -157,6 +157,7 @@ class RuleDaoWin extends RuleDao {
         row['cookies'],
         row['enableDiscover'] as int != 0,
         row['discoverUrl'],
+        row['discoverNextUrl'],
         row['discoverItems'],
         row['discoverList'],
         row['discoverTags'],
@@ -168,6 +169,7 @@ class RuleDaoWin extends RuleDao {
         row['discoverResult'],
         row['enableSearch'] as int != 0,
         row['searchUrl'],
+        row['searchNextUrl'],
         row['searchItems'],
         row['searchList'],
         row['searchTags'],
@@ -179,6 +181,7 @@ class RuleDaoWin extends RuleDao {
         row['searchResult'],
         row['enableMultiRoads'] as int != 0,
         row['chapterUrl'],
+        row['chapterNextUrl'],
         row['chapterRoads'],
         row['chapterRoadName'],
         row['chapterItems'],
@@ -189,6 +192,7 @@ class RuleDaoWin extends RuleDao {
         row['chapterTime'],
         row['chapterResult'],
         row['contentUrl'],
+        row['contentNextUrl'],
         row['contentItems'],
       );
 

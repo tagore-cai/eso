@@ -57,4 +57,6 @@ class APIFromRUle implements API {
         ])
     ];
   }
+
+  static void clearNextUrl() {}
 }

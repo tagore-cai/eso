@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:eso/page/langding_page.dart';
 import 'package:eso/utils.dart';
 import 'package:eso/utils/cache_util.dart';
-import 'package:file_chooser/file_chooser.dart';
+import 'package:file_selector_platform_interface/file_selector_platform_interface.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -216,24 +216,24 @@ class _FontFamilyProvider with ChangeNotifier {
 
   void pickFont() async {
     if (Global.isDesktop) {
-      final f = await showOpenPanel(
+      final f = await FileSelectorPlatform.instance.openFile(
         confirmButtonText: '选择字体',
-        allowedFileTypes: <FileTypeFilterGroup>[
-          FileTypeFilterGroup(
+        acceptedTypeGroups: <XTypeGroup>[
+          XTypeGroup(
             label: '字体文件',
-            fileExtensions: <String>['ttf', 'ttc', 'otf'],
+            extensions: <String>['ttf', 'ttc', 'otf'],
           ),
-          FileTypeFilterGroup(
+          XTypeGroup(
             label: '其他',
-            fileExtensions: <String>[],
+            extensions: <String>[],
           ),
         ],
       );
-      if (f.canceled) {
+      if (f == null || f.path == null) {
         Utils.toast('未选取字体文件');
         return;
       }
-      final ttf = f.paths.first;
+      final ttf = f.path;
       final file = File(ttf);
       final name = Utils.getFileName(ttf);
       await _cacheUtil.putFile(name, file);

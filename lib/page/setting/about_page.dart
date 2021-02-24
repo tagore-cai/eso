@@ -11,7 +11,7 @@ import 'package:eso/page/source/edit_source_page.dart';
 import 'package:eso/utils.dart';
 import 'package:eso/utils/cache_util.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:file_chooser/file_chooser.dart';
+import 'package:file_selector_platform_interface/file_selector_platform_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -228,24 +228,24 @@ class AboutPage extends StatelessWidget {
                                     subtitle: Text(_ruleFile ?? '使用默认文件'),
                                     onTap: () async {
                                       if (Global.isDesktop) {
-                                        final f = await showOpenPanel(
+                                        final f = await FileSelectorPlatform.instance.openFile(
                                           confirmButtonText: '选择规则',
-                                          allowedFileTypes: <FileTypeFilterGroup>[
-                                            FileTypeFilterGroup(
+                                          acceptedTypeGroups: <XTypeGroup>[
+                                            XTypeGroup(
                                               label: '规则文件',
-                                              fileExtensions: <String>['json', 'txt'],
+                                              extensions: <String>['json', 'txt'],
                                             ),
-                                            FileTypeFilterGroup(
+                                            XTypeGroup(
                                               label: '其他',
-                                              fileExtensions: <String>[],
+                                              extensions: <String>[],
                                             ),
                                           ],
                                         );
-                                        if (f.canceled) {
+                                        if (f == null || f.path == null) {
                                           Utils.toast('未选取规则文件');
                                           return;
                                         }
-                                        _ruleFile = f.paths.first;
+                                        _ruleFile = f.path;
                                         _ruleBytes = File(_ruleFile).readAsBytesSync();
                                         _state(() => null);
                                       } else {
